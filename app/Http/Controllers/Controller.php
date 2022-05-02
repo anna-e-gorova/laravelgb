@@ -21,7 +21,7 @@ class Controller extends BaseController
             $id = $i +1;
             $category[] = [
                 'id' => $id,
-                'category' => $faker->text(10)
+                'name' => $faker->text(10)
             ];
         }
         return $category;
@@ -43,10 +43,11 @@ class Controller extends BaseController
             ];
         }
 
-        for($i=0; $i<10; $i++) {
+        for($i=0; $i<30; $i++) {
             $id = $i +1;
             $news[] = [
                 'id' => $id,
+                'categoryId' => $faker->numberBetween(1,5),
                 'title' => $faker->jobTitle(),
                 'author' => $faker->name(),
                 'image'  => $faker->imageUrl(),

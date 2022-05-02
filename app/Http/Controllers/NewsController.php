@@ -6,12 +6,21 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    public function index()
+    public function index(int $categoryId = null)
     {
-        $news = $this->getNews();
+        $newsList = $this->getNews();
         $categories = $this->getCategory();
+
+        if ($categoryId) {
+            foreach ($newsList as $key => $value ) {
+                if ($value['categoryId'] != $categoryId) {
+                    unset($newsList[$key]);
+                }
+            }
+        }
+
         return view('news.index', [
-            'newsList' => $news,
+            'newsList' => $newsList,
             'categories' => $categories
         ]);
     }
