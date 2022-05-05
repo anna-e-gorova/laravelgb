@@ -27,7 +27,7 @@ class NewsController extends Controller
 
     public function show(int $id)
     {
-        if($id > 11) {
+        if($id > 30) {
             abort(404);
         }
 

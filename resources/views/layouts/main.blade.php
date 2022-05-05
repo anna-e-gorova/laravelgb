@@ -24,18 +24,13 @@
         }
     </style>
 </head>
-<body>
+<body style="display: flex; flex-direction: column; height: 100%;">
 
-<header>
-    <div class="collapse bg-dark" id="navbarHeader">
+<x-header></x-header>
 
-    </div>
-    <div class="navbar navbar-dark bg-dark shadow-sm">
+<x-sidebar></x-sidebar>
 
-    </div>
-</header>
-
-<main>
+<main style="flex: 1 0 auto;">
     <div class="album py-5 bg-light">
         <div class="container">
             @yield('content')
@@ -47,5 +42,6 @@
 
 
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/sidebars.js') }}"></script>
 </body>
 </html>

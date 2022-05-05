@@ -1,4 +1,4 @@
-<footer class="text-muted py-5">
+<footer class="text-muted py-5" style="flex: 0 0 auto">
     <div class="container">
         <p class="float-end mb-1">
             <a href="#">Вверх</a>

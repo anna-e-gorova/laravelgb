@@ -30,20 +30,20 @@ Route::get('/', [HelloController::class, 'index'])
 
 Route::get('/info', function () {
   return view('info');
+})->name('info');
+
+//news routes
+Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
+    Route::get('/', [NewsController::class, 'index'])
+        ->name('index');
+    Route::get('/category', [CategoryController::class, 'index'])
+        ->name('categories');
+    Route::get('/{id}', [NewsController::class, 'show'])
+        ->where('id', '\d+')
+        ->name('show');
+    Route::get('/category/{id?}', [NewsController::class, 'index'])
+        ->name('category');
 });
-
-Route::get('/news', [NewsController::class, 'index'])
-    ->name('news');
-
-Route::get('/categories', [CategoryController::class, 'index'])
-    ->name('categories');
-
-Route::get('/news/{id}', [NewsController::class, 'show'])
-    ->where('id', '\d+')
-    ->name('news.show');
-
-Route::get('/news/category/{id?}', [NewsController::class, 'index'])
-    ->name('news.category');
 
 //admin routes
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {

@@ -1,7 +1,15 @@
 @extends('layouts.main')
 @section('title') Список новостей @parent @stop
 @section('content')
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        <ul class="nav justify-content-center">
+            @forelse($categories as $category)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('news.category', ['id' => $category['id']])}}">{{$category['name']}}</a>
+            @empty
+            @endforelse
+        </ul>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         @forelse($newsList as $news)
         <div class="col">
             <div class="card shadow-sm">

@@ -21,7 +21,8 @@ class Controller extends BaseController
             $id = $i +1;
             $category[] = [
                 'id' => $id,
-                'name' => $faker->text(10)
+                'name' => $faker->text(10),
+                'image'  => $faker->imageUrl()
             ];
         }
         return $category;
