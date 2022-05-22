@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
     public function index(int $categoryId = null)
     {
-        $newsList = $this->getNews();
-        $categories = $this->getCategory();
+        $modelNews = app(News::class);
+        $modelCategory = app(Category::class);
+        $newsList = $modelNews->getNews();
+        //$newsList = $this->getNews();
+        $categories = $modelCategory->getCategories();
 
         if ($categoryId) {
-            foreach ($newsList as $key => $value ) {
-                if ($value['categoryId'] != $categoryId) {
-                    unset($newsList[$key]);
-                }
-            }
+            $newsList = $modelNews->getNewsByCategory($categoryId);
+            //dd($newsList);
         }
-
+        //dd($newsList);
         return view('news.index', [
             'newsList' => $newsList,
             'categories' => $categories
@@ -27,11 +29,12 @@ class NewsController extends Controller
 
     public function show(int $id)
     {
-        if($id > 30) {
+        $modelNews = app(News::class);
+        if($id > 50) {
             abort(404);
         }
 
-        $news = $this->getNews($id);
+        $news = $modelNews->getOneNews($id);
         return view('news.show', [
             'news' => $news
         ]);

@@ -2,12 +2,12 @@
 @section('title') Список новостей @parent @stop
 @section('content')
     <div>
-        {{ $news['title'] }}
+        {{ $news->title }}
         <br />
-        <img src="{{ $news['image'] }}" style="width:200px;"><br>
+        <img src="{{ $news->image }}" style="width:200px;"><br>
 
         <br>
-        <p><strong>Автор:</strong> {{ $news['author'] }}</p>
-        <p>{!! $news['description'] !!}</p>
+        <p><strong>Автор:</strong> {{ $news->author }}</p>
+        <p>{!! $news->description !!}</p>
     </div>
 @endsection
