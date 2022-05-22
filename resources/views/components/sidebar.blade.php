@@ -35,6 +35,19 @@
                 About
             </a>
         </li>
+        <li>
+            <a href="{{ route('order') }}" class="nav-link text-white">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href=""></use></svg>
+                Order
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('feedback') }}" class="nav-link text-white">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href=""></use></svg>
+                Feedback
+            </a>
+        </li>
+
     </ul>
     <hr>
     <div class="dropdown">

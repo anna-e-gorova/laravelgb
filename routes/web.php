@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\IndexController as AdminController;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Web News
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -27,6 +27,14 @@ Route::get('/', function () {
 
 Route::get('/', [HelloController::class, 'index'])
     ->name('hello');
+Route::get('/feedback', [HelloController::class, 'feedback'])
+    ->name('feedback');
+Route::post('/feedback', [HelloController::class, 'feedback'])
+    ->name('feedback');
+Route::get('/order', [HelloController::class, 'order'])
+    ->name('order');
+Route::post('/store', [HelloController::class, 'store'])
+    ->name('store');
 
 Route::get('/info', function () {
   return view('info');
