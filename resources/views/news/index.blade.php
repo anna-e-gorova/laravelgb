@@ -5,7 +5,7 @@
         <ul class="nav justify-content-center">
             @forelse($categories as $category)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('news.category', ['id' => $category['id']])}}">{{$category['name']}}</a>
+                    <a class="nav-link" href="{{route('news.category', ['id' => $category->id])}}">{{$category->title}}</a>
             @empty
             @endforelse
         </ul>
@@ -13,17 +13,17 @@
         @forelse($newsList as $news)
         <div class="col">
             <div class="card shadow-sm">
-                <img src="{{ $news['image'] }}" style="width:200px;">
+                <img src="{{ $news->image }}" style="width:200px;">
                 <div class="card-body">
                     <strong>
-                        <a href="{{ route('news.show', ['id' => $news['id']]) }}">{{ $news['title'] }}</a>
+                        <a href="{{ route('news.show', ['id' => $news->id]) }}">{{ $news->title }}</a>
                     </strong>
-                    <p class="card-text"> {!! $news['description'] !!} </p>
+                    <p class="card-text"> {!! $news->description !!} </p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <a href="{{ route('news.show', ['id' => $news['id']]) }}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                            <a href="{{ route('news.show', ['id' => $news->id]) }}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
                         </div>
-                        <small class="text-muted"><strong>Автор:</strong> {{ $news['author'] }}</small>
+                        <small class="text-muted"><strong>Автор:</strong> {{ $news->author }}</small>
                     </div>
                 </div>
             </div>

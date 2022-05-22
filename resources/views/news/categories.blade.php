@@ -7,11 +7,10 @@
         <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
             @forelse($categories as $category)
                 <div class="col">
-                    <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
-                         style="background-image: url({{$category['image']}});">
+                    <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg">
                         <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-                            <a class="nav-link" href="{{route('news.category', ['id' => $category['id']])}}">
-                                <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{$category['name']}}</h2>
+                            <a class="nav-link" href="{{route('news.category', ['id' => $category->id])}}">
+                                <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{$category->title}}</h2>
                             </a>
                             <ul class="d-flex list-unstyled mt-auto">
                                 <li class="me-auto">
