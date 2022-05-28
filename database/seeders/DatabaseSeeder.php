@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Sources;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,7 +19,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SourceSeeder::class,
             CategorySeeder::class,
-            NewsSeeder::class
+            NewsSeeder::class,
+            OrdersSeeder::class,
+            FeedbacksSeeder::class
         ]);
     }
 }

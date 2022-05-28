@@ -20,7 +20,7 @@ return new class extends Migration
                 ->constrained('categories')
                 ->cascadeOnDelete();
 
-            $table->foreignId('source_id')
+            $table->foreignId('source_id')->default(1)
                 ->constrained('sources');
 
             $table->string('title', 255);

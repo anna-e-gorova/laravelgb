@@ -6,20 +6,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Sources extends Model
 {
     use HasFactory;
 
-    protected $table = "categories";
+    protected $table = "sources";
 
     protected $fillable = [
-        'title', 'description'
+        'name', 'url'
     ];
 
     public function news(): HasMany
     {
         return $this->hasMany(News::class,
-            'category_id', 'id');
+            'source_id', 'id');
     }
-
 }
