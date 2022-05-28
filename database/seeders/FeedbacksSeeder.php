@@ -7,7 +7,7 @@ use Faker\Factory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class FeedbacksSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert($this->getData());
+        DB::table('feedbacks')->insert($this->getData());
     }
 
     private function getData(): array
@@ -25,7 +25,7 @@ class CategorySeeder extends Seeder
         $faker = Factory::create();
         for($i=0; $i<5; $i++) {
             $data[] = [
-                'title' => $faker->jobTitle(),
+                'name' => $faker->name(),
                 'description' => $faker->text(100),
                 'updated_at' => $faker->dateTime(),
                 'created_at' => $faker->dateTime()

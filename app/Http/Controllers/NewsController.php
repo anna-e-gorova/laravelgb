@@ -4,39 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use App\Models\Category;
+use App\Queries\QueryBuilderNews;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    public function index(int $categoryId = null)
+    public function index(QueryBuilderNews $news, int $categoryId = NULL)
     {
-        $modelNews = app(News::class);
-        $modelCategory = app(Category::class);
-        $newsList = $modelNews->getNews();
-        //$newsList = $this->getNews();
-        $categories = $modelCategory->getCategories();
+        $categories = Category::all();
 
         if ($categoryId) {
-            $newsList = $modelNews->getNewsByCategory($categoryId);
-            //dd($newsList);
+            $newsList = $news->getNewsByCategory($categoryId);
+        } else {
+            $newsList = $news->getNews();
         }
-        //dd($newsList);
+
         return view('news.index', [
             'newsList' => $newsList,
             'categories' => $categories
         ]);
     }
 
-    public function show(int $id)
+    public function show(QueryBuilderNews $news, int $id)
     {
-        $modelNews = app(News::class);
-        if($id > 50) {
-            abort(404);
-        }
-
-        $news = $modelNews->getOneNews($id);
+        $oneNews = $news->getNewsById($id);
         return view('news.show', [
-            'news' => $news
+            'news' => $oneNews
         ]);
     }
 }

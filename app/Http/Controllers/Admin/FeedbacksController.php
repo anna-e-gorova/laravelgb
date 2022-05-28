@@ -3,23 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\News;
-use App\Queries\QueryBuilderNews;
+use App\Models\Feedbacks;
+use App\Queries\QueryBuilderFeedbacks;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+
+class FeedbacksController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(QueryBuilderNews $news)
+    public function index(QueryBuilderFeedbacks $feedbacks)
     {
-        //dd($news->getNews());
-        return view('admin.news.index', [
-            'news' => $news->getNews()
+        return view('admin.feedbacks.index', [
+            'feedbacks' => $feedbacks->getFeedbacks()
         ]);
     }
 
@@ -30,10 +29,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('admin.news.create', [
-            'categories' => $categories
-        ]);
+        return view('admin.feedbacks.create');
     }
 
     /**
@@ -44,16 +40,11 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => ['required', 'string']
-        ]);
+        $validated = $request->only(['name', 'description']);
+        $feedbacks = new Feedbacks($validated);
 
-        $validated = $request->except(['_token', 'image']);
-        $validated['slug'] = \Str::slug($validated['title']);
-
-        $news = News::create($validated);
-        if($news) {
-            return redirect()->route('admin.news.index')
+        if($feedbacks->save()) {
+            return redirect()->route('admin.feedbacks.index')
                 ->with('success', 'Запись успешно добавлена');
         }
 
@@ -63,10 +54,10 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param News $news
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(News $news)
+    public function show($id)
     {
         //
     }
@@ -74,33 +65,30 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param News $news
+     * @param  Feedbacks $feedbacks
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(News $news)
+    public function edit(Feedbacks $feedback)
     {
-        $categories = Category::all();
-        return view('admin.news.edit', [
-            'news' => $news,
-            'categories' => $categories
+        return view('admin.feedbacks.edit', [
+            'feedback' => $feedback
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param News $news
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Feedbacks $feedbacks
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, News $news)
+    public function update(Request $request, Feedbacks $feedback)
     {
-        $validated = $request->except(['_token', 'image']);
-        $validated['slug'] = \Str::slug($validated['title']);
+        $validated = $request->only(['name', 'description']);
 
-        $news = $news->fill($validated);
-        if($news->save()) {
-            return redirect()->route('admin.news.index')
+        $feedback = $feedback->fill($validated);
+        if($feedback->save()) {
+            return redirect()->route('admin.feedbacks.index')
                 ->with('success', 'Запись успешно обновлена');
         }
 
@@ -110,10 +98,10 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param News $news
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy($id)
     {
         //
     }

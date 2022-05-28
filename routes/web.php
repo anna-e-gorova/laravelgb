@@ -7,6 +7,9 @@ use App\Http\Controllers\HelloController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
+use App\Http\Controllers\Admin\SourcesController as AdminSourcesController;
+use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
+use App\Http\Controllers\Admin\FeedbacksController as AdminFeedbacksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,4 +62,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         ->name('index');
     Route::resource('/categories', AdminCategoryController::class);
     Route::resource('/news', AdminNewsController::class);
+    Route::resource('/sources', AdminSourcesController::class);
+    Route::resource('/orders', AdminOrdersController::class);
+    Route::resource('/feedbacks', AdminFeedbacksController::class);
+});
+
+Route::get('/collection', function() {
+    $collection = collect(['Nick', 'Ben', 'Ann', 'Jil', 'Fred', 'Pit', 'July']);
+    dd($collection->map(function($item) {
+        return strtoupper($item);
+    })->filter(function($item) {
+        if(strlen($item) > 3) {
+            return $item;
+        }
+    })->sort()->toJson());
 });

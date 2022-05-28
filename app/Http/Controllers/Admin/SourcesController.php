@@ -3,23 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\News;
-use App\Queries\QueryBuilderNews;
+use App\Models\Sources;
+use App\Queries\QueryBuilderSources;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+class SourcesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(QueryBuilderNews $news)
+    public function index(QueryBuilderSources $sources)
     {
-        //dd($news->getNews());
-        return view('admin.news.index', [
-            'news' => $news->getNews()
+        return view('admin.sources.index', [
+            'sources' => $sources->getSources()
         ]);
     }
 
@@ -30,10 +28,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('admin.news.create', [
-            'categories' => $categories
-        ]);
+        return view('admin.sources.create');
     }
 
     /**
@@ -44,16 +39,11 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => ['required', 'string']
-        ]);
+        $validated = $request->only(['name', 'url']);
+        $sources = new Sources($validated);
 
-        $validated = $request->except(['_token', 'image']);
-        $validated['slug'] = \Str::slug($validated['title']);
-
-        $news = News::create($validated);
-        if($news) {
-            return redirect()->route('admin.news.index')
+        if($sources->save()) {
+            return redirect()->route('admin.sources.index')
                 ->with('success', 'Запись успешно добавлена');
         }
 
@@ -63,10 +53,10 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param News $news
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(News $news)
+    public function show($id)
     {
         //
     }
@@ -74,33 +64,30 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param News $news
+     * @param  Sources $source
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(News $news)
+    public function edit(Sources $source)
     {
-        $categories = Category::all();
-        return view('admin.news.edit', [
-            'news' => $news,
-            'categories' => $categories
+        return view('admin.sources.edit', [
+            'source' => $source
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param News $news
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Sources $source
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, News $news)
+    public function update(Request $request, Sources $source)
     {
-        $validated = $request->except(['_token', 'image']);
-        $validated['slug'] = \Str::slug($validated['title']);
+        $validated = $request->only(['name', 'url']);
 
-        $news = $news->fill($validated);
-        if($news->save()) {
-            return redirect()->route('admin.news.index')
+        $source = $source->fill($validated);
+        if($source->save()) {
+            return redirect()->route('admin.sources.index')
                 ->with('success', 'Запись успешно обновлена');
         }
 
@@ -110,10 +97,10 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param News $news
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy($id)
     {
         //
     }

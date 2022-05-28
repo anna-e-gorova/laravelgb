@@ -31,8 +31,8 @@
         @empty
             <h2>Новостей нет!</h2>
         @endforelse
-
     </div>
+        {{ $newsList->links() }}
 @endsection
 
 
